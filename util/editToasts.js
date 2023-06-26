@@ -28,7 +28,7 @@ blacket.createToast = (toast, queued) => {
         <div class="styles__toastContainer___o4pCa-camelCase">
             <img class="styles__toastIcon___vna3A-camelCase" src="${toast.icon}">
             <div class="styles__toastTitle___39Rac-camelCase">${parseCustomColors(toast.title)}</div>
-            <div class="fware_toast">${parseCustomColors(toast.message)}</div>
+            <div class="styles__toastMessage___xar43-camelCase">${parseCustomColors(toast.message)}</div>
         </div>
     `);
 
