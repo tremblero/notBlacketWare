@@ -6,6 +6,11 @@
 
 while (blacket === undefined) {}
 
+document.head.insertAdjacentHTML(
+  'beforeend',
+  '<style>.fware_toast {position: relative; color: white; top: 45px; left: 8px; overflow: hidden; height: 60px; width: 280px; filter: opacity(0.5);}</style>'
+);
+
 blacket.createToast = (toast, queued) => {
     if (!toast.time) toast.time = 5000;
     if (!toast.icon) toast.icon = "/content/blooks/Info.png";
@@ -28,7 +33,7 @@ blacket.createToast = (toast, queued) => {
         <div class="styles__toastContainer___o4pCa-camelCase">
             <img class="styles__toastIcon___vna3A-camelCase" src="${toast.icon}">
             <div class="styles__toastTitle___39Rac-camelCase">${parseCustomColors(toast.title)}</div>
-            <div class="styles__toastMessage___xar43-camelCase">${parseCustomColors(toast.message)}</div>
+            <div class="fware_toast">${parseCustomColors(toast.message)}</div>
         </div>
     `);
 
