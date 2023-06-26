@@ -6,23 +6,6 @@
 
 while (blacket === undefined) {}
 
-document.head.insertAdjacentHTML(
-  'beforeend',
-  `<style>
-    .fware_toast {
-      position: relative;
-      color: white;
-      top: 45px;
-      left: 8px;
-      overflow: hidden;
-      height: 60px;
-      width: 280px;
-      filter: opacity(0.3);
-    }
-  </style>`
-);
-
-
 blacket.createToast = (toast, queued) => {
     if (!toast.time) toast.time = 5000;
     if (!toast.icon) toast.icon = "/content/blooks/Info.png";
