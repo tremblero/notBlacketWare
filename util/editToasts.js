@@ -1,10 +1,12 @@
 /*
+
  -  ADDS COLORING TO TOAST MESSAGES
+ 
+ - Examples:
+ <red>, <blue>, <yellow>
+ <#FAECAE>, <#367ACA> [https://htmlcolorcodes.com/]
+ 
 */
-
-// fware
-
-while (blacket === undefined) {}
 
 blacket.createToast = (toast, queued) => {
     if (!toast.time) toast.time = 5000;
