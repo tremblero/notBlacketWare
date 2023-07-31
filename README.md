@@ -1,4 +1,3 @@
-# not blacket ware
-FoxWare? Blacket Client? Multitool? Free?
-
-Utilities in my client.
+# Blacket Client (tremblero's QoL Client)
+Utilities and resources for my client!
+Anything posted here is free to use
