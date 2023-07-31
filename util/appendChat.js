@@ -315,3 +315,141 @@
       }
     }
   };
+
+ $("#chatContainer").html("");
+  blacket.socket.emit("leave", blacket.currentRoom);
+  blacket.socket.emit("join", blacket.currentRoom);
+
+  document.addEventListener("contextmenu", function (e) {
+    if (
+      !e.target.classList.contains("styles__chatMessage___2Z1ZU-camelCase") &&
+      !e.target.classList.contains(
+        "styles__chatMessageMention___2Z1ZU-camelCase"
+      )
+    )
+      return;
+    if (!e.target.id.startsWith("message-")) return;
+    let messageId = e.target.id.split("-")[1];
+    let time = e.target.getAttribute("time");
+    e.preventDefault();
+    $("#contextMenu").remove();
+    $("body").append(
+      `<body>
+  <div id="contextMenu" style="
+    position: absolute;
+    top: ${e.pageY}px;
+    left: ${e.pageX}px;
+    z-index: 1000;
+    background-color: #2f2f2f;
+    border-radius: 5px;
+    padding: 5px;
+    color: white;
+    font-size: 14px;
+    font-family: 'Roboto', sans-serif;
+    user-select: none;
+    cursor: default;
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+  ">
+    <text>This was sent ${timeAgov2(time)}</text>
+    <div id="deleteButton" style="
+      padding: 5px;
+      cursor: pointer;
+    ">Delete (Client Side)</div>
+    <div id="tradeButton" style="
+      padding: 5px;
+      cursor: pointer;
+    ">Send Trade</div>
+    <div id="replyButton" style="
+      padding: 5px;
+      cursor: pointer;
+    ">Reply</div>
+  </div>
+</body>
+`
+    );
+    // REPLY
+
+    $("#replyButton").click(() => {
+      document.getElementById("chatBox").value += `@${getUser(messageId)} `;
+      document.getElementById("chatBox").focus();
+      $("#contextMenu").remove();
+    });
+
+    // TRADE
+
+    $("#tradeButton").click(() => {
+      blacket.startLoading();
+      $(".arts__modal___VpEAD-camelCase").remove();
+      blacket.requests.get(`/worker/user/${getUser(messageId)}`, (data) => {
+        if (data.error) {
+          $("body").append(
+            `<div id="errorModal" class="arts__modal___VpEAD-camelCase"><form class="styles__container___1BPm9-camelCase"><div class="styles__text___KSL4--camelCase"><div>Error<br><br>${data.reason}</div></div><div class="styles__holder___3CEfN-camelCase"><div class="styles__buttonContainer___2EaVD-camelCase"><div id="closeButton" class="styles__button___1_E-G-camelCase styles__button___3zpwV-camelCase" role="button" tabindex="0"><div class="styles__shadow___3GMdH-camelCase"></div><div class="styles__edge___3eWfq-camelCase" style="background-color: #2f2f2f;"></div><div class="styles__front___vcvuy-camelCase styles__buttonInside___39vdp-camelCase" style="background-color: #2f2f2f;">Okay</div></div></div></div><input type="submit" style="opacity: 0; display: none;" /></form></div>`
+          );
+          $("#closeButton").click(() => {
+            $("#errorModal").remove();
+          });
+          blacket.stopLoading();
+          return;
+        }
+        blacket.stopLoading();
+        $("body").append(
+          `<div id="waitingForModal" class="loaderModal"><div class="loader"><div class="blookContainerLoader loaderBox"><img loading="lazy" src="/content/logo.png" class="loaderBlook" /></div><div class="styles__shadow___3OUHP-camelCase"></div></div><text class="styles__waitingForText__G5A73-camelCase">Waiting for ${data.user.username} to accept...</text><div id="cancelButton" class="styles__button___1_E-G-camelCase styles__button___3zpwV-camelCase" role="button" tabindex="0" style="position: absolute;left: 50%;top: 64.5%;transform: translate(-50%, -50%);"><div class="styles__shadow___3GMdH-camelCase"></div><div class="styles__edge___3eWfq-camelCase" style="background-color: #2f2f2f;"></div><div class="styles__front___vcvuy-camelCase styles__buttonInside___39vdp-camelCase" style="background-color: #2f2f2f;">Cancel</div></div></div>`
+        );
+        $("#cancelButton").click(() => {
+          $("#waitingForModal").remove();
+          blacket.socket.emit("cancel");
+        });
+        blacket.socket.emit("request", data.user.id);
+      });
+      $("#contextMenu").remove();
+    });
+
+    // DEL
+    if (
+      blacket.user.perms.includes("*") ||
+      blacket.user.perms.includes("delete_messages")
+    )
+      $("#deleteButton")[0].innerHTML = "Delete";
+
+    $("#deleteButton").click(() => {
+      if (
+        blacket.user.perms.includes("*") ||
+        blacket.user.perms.includes("delete_messages")
+      ) {
+        blacket.socket.emit("delete", messageId);
+      } else {
+        if ($(`#message-${messageId}`).parent().children().length === 3) {
+          var rjs = document.getElementById(`message-${messageId}`);
+          var arjs = [...rjs.parentElement.parentElement.children];
+          $(`#message-${messageId}`).parent().remove();
+          blacket.lastUser = parseInt(
+            (
+              arjs[arjs.length - 2] || {
+                dataset: {
+                  userId: NaN,
+                },
+              }
+            ).dataset.userId
+          );
+        } else {
+          var rjs = document.getElementById(`message-${messageId}`);
+          var index = [...rjs.parentElement.children].indexOf(rjs);
+          if (index === 2) {
+            if ([...rjs.parentElement.children].slice(2).length > 1)
+              [...rjs.parentElement.children].slice(2)[1].style.marginTop =
+                "-32.5px";
+            rjs.remove();
+          } else {
+            [...rjs.parentElement.children][index].style.marginTop = "-32.5px";
+            $(`#message-${messageId}`).remove();
+          }
+        }
+      }
+      $("#contextMenu").remove();
+    });
+    $(document).click(function (e) {
+      if (!$(e.target).closest("#contextMenu").length) {
+        $("#contextMenu").remove();
+      }
+    });
+  });
