@@ -1,4 +1,17 @@
-  blacket.appendChat = async (data, mentioned) => {
+/*
+
+(This is part of a different script)
+Features:
+ - Fixes chat scrolling all the way to the bottom everytime someone sends a message.
+ - Right click UI:
+   - See when a message was sent
+   - Delete a message locally
+   - Quick trade
+   - Quick reply
+
+*/
+
+blacket.appendChat = async (data, mentioned) => {
     let message = blacket.htmlEncode(data.message);
     message = message.replace(
       /&lt;(gradient=\[(?:up|down|left|right|\d{1,3}deg)(?: |):(?: |)(?:(?:(?:black|lime|white|brown|magenta|cyan|turquoise|red|orange|yellow|green|blue|purple|\#[0-9a-fA-F]{6})(?:, |,| ,| , |)){2,7})\]|black|lime|white|brown|magenta|cyan|turquoise|red|orange|yellow|green|blue|purple|(\#[0-9a-fA-F]{6}))&gt;(.+?)&lt;\/([^&]+?)&gt;/g,
