@@ -169,7 +169,8 @@ blacket.appendChat = async (data, mentioned) => {
     );
     if (chatContainer.scrollHeight - chatContainer.scrollTop <= 1100) {
       let tempScrollInterval = setInterval(() => {
-        chatContainer.scrollTop = chatContainer.scrollHeight;
+        if (blacket.scroll) blacket.scroll();
+        else chatContainer.scrollTop = chatContainer.scrollHeight;
       }, 1);
       setTimeout(() => {
         clearInterval(tempScrollInterval);
@@ -312,7 +313,8 @@ blacket.appendChat = async (data, mentioned) => {
   }, 200);
   if (chatContainer.scrollHeight - chatContainer.scrollTop <= 1100) {
     let tempScrollInterval = setInterval(() => {
-      chatContainer.scrollTop = chatContainer.scrollHeight;
+      if (blacket.scroll) blacket.scroll();
+      else chatContainer.scrollTop = chatContainer.scrollHeight;
     }, 1);
     setTimeout(() => {
       clearInterval(tempScrollInterval);
@@ -458,4 +460,4 @@ document.addEventListener("contextmenu", function (e) {
   });
 });
 
-print(`Loaded version 1.1.0`);
+print(`Loaded version 1.5.0`);
