@@ -178,8 +178,11 @@ blacket.appendChat = async (data, mentioned) => {
         setTimeout(() => {
           clearInterval(tempScrollInterval);
         }, 250);
-      } else 
-          blacket.unread++;
+      } else {
+        console.log("Unread message.");
+        blacket.unread++;
+        console.log(blacket.unread);
+      }
     }
     return;
   }
@@ -313,19 +316,22 @@ blacket.appendChat = async (data, mentioned) => {
   setTimeout(() => {
     $(`#${randomAvatarId}`).attr("src", data.user.avatar);
   }, 200);
-if (
+  if (
     chatContainer.maxScrollTop - chatContainer.scrollTop <=
     chatContainer.offsetHeight
-) {
+  ) {
     if (chatContainer.scrollHeight - chatContainer.scrollTop <= 1100) {
-        let tempScrollInterval = setInterval(() => {
-            chatContainer.scrollTop = chatContainer.scrollHeight;
-        }, 1);
-        setTimeout(() => {
-            clearInterval(tempScrollInterval);
-        }, 250);
-    } else
-        blacket.unread++;
+      let tempScrollInterval = setInterval(() => {
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+      }, 1);
+      setTimeout(() => {
+        clearInterval(tempScrollInterval);
+      }, 250);
+    } else {
+      console.log("Unread message.");
+      blacket.unread++;
+      console.log(blacket.unread);
+    }
   }
 };
 
