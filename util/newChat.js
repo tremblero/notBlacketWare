@@ -175,9 +175,7 @@ blacket.appendChat = async (data, mentioned) => {
         clearInterval(tempScrollInterval);
       }, 250);
     } else {
-      console.log("Unread message.");
       blacket.unread++;
-      console.log(blacket.unread);
     }
 
     return;
@@ -320,9 +318,7 @@ blacket.appendChat = async (data, mentioned) => {
       clearInterval(tempScrollInterval);
     }, 250);
   } else {
-    console.log("Unread message.");
     blacket.unread++;
-    console.log(blacket.unread);
   }
 };
 
@@ -462,4 +458,4 @@ document.addEventListener("contextmenu", function (e) {
   });
 });
 
-print(`Loaded version 1.0.0`);
+print(`Loaded version 1.1.0`);
