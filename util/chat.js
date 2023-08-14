@@ -177,6 +177,7 @@ blacket.appendChat = async (data, mentioned) => {
       }, 250);
     } else {
       blacket.unread++;
+      if(mentioned) blacket.mentions++;
     }
 
     return;
@@ -321,6 +322,7 @@ blacket.appendChat = async (data, mentioned) => {
     }, 250);
   } else {
     blacket.unread++;
+      if(mentioned) blacket.mentions++;
   }
 };
 
