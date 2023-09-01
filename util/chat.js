@@ -167,13 +167,6 @@ blacket.appendChat = async (data, mentioned) => {
         mentioned ? "Mention" : ""
       }___2Z1ZU-camelCase">${message}</text>`
     );
-    if (mentioned)
-      new Notification(data.user.username, {
-        body: removeCSSAndColorCodes(data.message),
-        icon: data.user.avatar,
-        tag: "BLACKET_MENTION",
-        silent: true,
-      });
     if (chatContainer.scrollHeight - chatContainer.scrollTop <= 1100) {
       let tempScrollInterval = setInterval(() => {
         if (blacket.scroll) blacket.scroll();
@@ -216,13 +209,6 @@ blacket.appendChat = async (data, mentioned) => {
       mentioned ? "Mention" : ""
     }___2Z1ZU-camelCase">${message}</text></div>`
   );
-  if (mentioned)
-    new Notification(data.user.username, {
-      body: removeCSSAndColorCodes(data.message),
-      icon: data.user.avatar,
-      tag: "BLACKET_MENTION",
-      silent: true,
-    });
   $(`#${randomUsernameId}, #${randomAvatarId}`).click(() => {
     if (event.shiftKey) {
       $("#chatBox").val($("#chatBox").val() + `@${data.user.username} `);
@@ -476,10 +462,4 @@ document.addEventListener("contextmenu", function (e) {
   });
 });
 
-function removeCSSAndColorCodes(input) {
-  var result = input.replace(/<[^>]+>/g, "");
-  result = result.replace(/#[A-Fa-f0-9]{3,6}/g, "");
-  return result;
-}
-
-console.log(`Loaded version 1.6.0`);
+console.log(`Loaded version 1.5.0`);
